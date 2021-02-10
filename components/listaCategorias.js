@@ -150,6 +150,7 @@ const PrimeraPantalla = ({
 const SegundaPantalla = ({setColorNuevaCategoria, setPrimeraPantalla}) => {
   return (
     <>
+    <Text category="h2">Elegir color</Text>
       <ColorPicker
         onColorSelected={(color) => {
           setPrimeraPantalla(true);

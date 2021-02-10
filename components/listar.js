@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 });
 
 const Listar = ({...props}) => {
-  const {productos} = useContext(StoreContext);
+  const {productos} = useContext(StoreContext); //recibimos todo lo que le hayamos pasado en values
   const navigator = useNavigation();
 
   return (

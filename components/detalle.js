@@ -6,6 +6,7 @@ import {StoreContext} from '../context/storeContext';
 import {FlatList} from 'react-native-gesture-handler';
 import BottomSheetModal from './bottomSheetModal';
 import SeleccionarCategoria from './seleccionarCategoria';
+import SeleccionarComprador from './seleccionarComprador';
 
 const styles = StyleSheet.create({
   container: {
@@ -94,9 +95,14 @@ const styles = StyleSheet.create({
 const Detalle = ({route: {params}, ...props}) => {
   const navigator = useNavigation();
   const {producto} = params;
-  const {obtenerCategoriasDelProducto} = useContext(StoreContext);
+  const {obtenerCategoriasDelProducto} = useContext(StoreContext);  ///// lista de categorias q las sacamos del store context
   const categorias = obtenerCategoriasDelProducto(producto);
-  const [categoriasModal, setCategoriasModal] = useState(false);
+  
+  const {obtenerCompradorDelProducto} = useContext(StoreContext);  ///// lista de compradores q las sacamos del store context
+  const compradores = obtenerCompradorDelProducto(producto);
+  
+  const [categoriasModal, setCategoriasModal] = useState(false); ///////
+  const [compradorModal, setCompradorModal] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -106,6 +112,16 @@ const Detalle = ({route: {params}, ...props}) => {
         title="Seleccionar Categoria">
         <SeleccionarCategoria producto={producto} />
       </BottomSheetModal>
+
+      <BottomSheetModal
+        style={alignSelf="center"}
+        visible={compradorModal}
+        onClosePressed={() => setCompradorModal(false)} //////////////////////
+        title="Seleccionar un Comprador">
+        <SeleccionarComprador producto={producto} />
+        
+      </BottomSheetModal>
+    
       <Text category="h4">{producto.title}</Text>
       <View style={[styles.contenedorImgPrecio]}>
         <Image
@@ -137,7 +153,11 @@ const Detalle = ({route: {params}, ...props}) => {
           </TextNative>
         </View>
       </View>
-      <Text>Categorias:</Text>
+
+      <Text>Comprador:</Text>
+      <Text>{compradores}</Text>
+
+     <Text>Categorias:</Text>
       <FlatList
         data={categorias}
         horizontal
@@ -147,6 +167,9 @@ const Detalle = ({route: {params}, ...props}) => {
           </View>
         )}
       />
+
+    
+
       <View style={styles.form}>
         <Button
           appearance="outline"
@@ -155,6 +178,14 @@ const Detalle = ({route: {params}, ...props}) => {
             setCategoriasModal(true);
           }}>
           MODIFICAR CATEGORIAS
+        </Button>
+        <Button
+          appearance="outline"
+          style={styles.btnVolver}
+          onPress={() => {
+            setCompradorModal(true);
+          }}>
+          AGREGAR COMPRADOR
         </Button>
         <View style={styles.buttons}>
           <Button

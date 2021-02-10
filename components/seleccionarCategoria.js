@@ -37,6 +37,7 @@ const SeleccionarCategoria = ({producto}) => {
     const categoriaAsignada = categoriasDelProducto
       .map((c) => c.id)
       .includes(categoria.id);
+      console.log("categoriaAsignada" + categoriaAsignada)
 
     return (
       <View style={styles.item}>
